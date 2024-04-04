@@ -5,7 +5,9 @@ export default function Main() {
     return (
         <Layout>
 
-            <SearchBar/>
+            <div className="my-6 w-1/2 m-auto">
+                <SearchBar/>
+            </div>
 
             <div className="my-12 flex flex-col gap-x-10 gap-y-10 sm:my-8 md:flex-row">
                 <div className="w-full">
