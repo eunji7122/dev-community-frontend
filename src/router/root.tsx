@@ -1,10 +1,11 @@
 import {createBrowserRouter} from "react-router-dom";
 import {lazy, Suspense} from "react";
+import questionRouter from "./question-router";
 
 const Main = lazy(() => import("../pages/main"))
 const Login = lazy(() => import("../pages/login"))
 const CreateAccount = lazy(() => import("../pages/create-account"))
-const Questions = lazy(() => import("../pages/question/questions"))
+const QuestionIndex = lazy(() => import("../pages/question/index-question"))
 
 const root = createBrowserRouter([
     {
@@ -22,7 +23,8 @@ const root = createBrowserRouter([
     ,
     {
         path: 'questions',
-        element: <Suspense><Questions/></Suspense>
+        element: <Suspense><QuestionIndex/></Suspense>,
+        children: questionRouter
     }
 ])
 

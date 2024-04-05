@@ -1,16 +1,25 @@
-import Layout from "../../layouts/layout";
 import SearchBar from "../../components/search-bar";
 import Button from "../../components/button";
 import Pagination from "../../components/pagination";
 import DropDown from "../../components/drop-down";
+import {useNavigate} from "react-router-dom";
+import {useCallback} from "react";
 
 const Questions = () => {
-    return (
-        <Layout>
 
+    const navigate = useNavigate()
+
+    const handleClickAdd = useCallback(() => {
+        navigate({
+            pathname: '../add'
+        })
+    }, []);
+
+    return (
+        <div>
             <div className="relative my-6 flex items-center justify-between">
-                <div className="hidden flex-none sm:inline">
-                    <Button value="등록"/>
+                <div className="hidden flex-none sm:inline" onClick={handleClickAdd}>
+                    <Button value="등록" onClick={handleClickAdd}/>
                 </div>
 
                 <div className="w-1/2 float-right">
@@ -235,9 +244,8 @@ const Questions = () => {
             <div className="mb-9 sm:mb-16">
                 <Pagination/>
             </div>
-
-        </Layout>
+        </div>
     )
 }
 
-export default Questions
+export default Questions;

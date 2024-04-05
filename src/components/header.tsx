@@ -7,26 +7,25 @@ export default function Header() {
                 <div className="flex w-full items-center justify-between">
                     <div className="flex">
                         <Link to={"/"}>
-                            <span className="font-bold text-2xl mb-1 text-gray-700">
+                            <span className="font-extrabold text-2xl mb-1 text-gray-700">
                                 Dev
                             </span>
                         </Link>
                         <div className="ml-3 hidden items-center space-x-7 md:flex lg:ml-[105px]">
                             <div className="shrink-0">
-                                <a
-                                    className="text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-200 text-base font-medium hover:no-underline"
-                                    href="/questions"
-                                >
+                                <Link
+                                    className="font-extrabold text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-200 text-base hover:no-underline"
+                                    to={"/questions"}>
                                     Q/A
-                                </a>
+                                </Link>
+
                             </div>
                             <div className="shrink-0">
-                                <a
-                                    className="text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-200 text-base font-medium hover:no-underline"
-                                    href="/community"
-                                >
-                                    커뮤니티
-                                </a>
+                                <Link
+                                    className="font-extrabold text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-200 text-base hover:no-underline"
+                                    to={"/community"}>
+                                    COMMUNITY
+                                </Link>
                             </div>
                         </div>
                     </div>
