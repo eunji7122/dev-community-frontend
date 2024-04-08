@@ -15,6 +15,12 @@ const Questions = () => {
         })
     }, []);
 
+    const moveToView = (id: number) => {
+        navigate({
+            pathname: `../view/${id}`,
+        })
+    }
+
     return (
         <div>
             <div className="relative my-6 flex items-center justify-between">
@@ -64,7 +70,7 @@ const Questions = () => {
 
             <div className="mb-9 sm:mb-16">
                 <ul className="max-w-5xl mx-auto mt-10 divide-y divide-gray-200 dark:divide-gray-700">
-                    <li className="flex flex-col px-2 py-4 sm:px-2.5">
+                    <li className="flex flex-col px-2 py-4 sm:px-2.5" onClick={() => moveToView(1)}>
                         <div className="my-2 flex flex-1 items-center gap-x-3">
                             <div className="flex flex-1 items-center gap-x-3">
                                 <p className="line-clamp-1 w-fit truncate whitespace-normal break-all text-sm font-semibold text-gray-900 hover:text-blue-500 sm:text-lg">

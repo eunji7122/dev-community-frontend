@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
     return (
-        <footer className="p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6">
+        <footer className="p-4 w-full bg-white md:flex md:items-center md:justify-between md:p-6 bottom-0 border-t">
             <span className="text-sm text-gray-500 sm:text-center">
                 © 2024{" "}
                 <a href="https://github.com/eunji7122" className="hover:underline">

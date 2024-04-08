@@ -1,12 +1,12 @@
 import React from 'react';
 import Button from "../../components/button";
 
-const AddQuestion = () => {
+const ModifyQuestion = () => {
     return (
         <div>
             <section className="bg-white dark:bg-gray-900">
                 <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-                    <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">질문 등록하기</h2>
+                    <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">질문 수정하기</h2>
                     <form action="#">
                         <div className="">
                             <div className="mb-5">
@@ -110,7 +110,7 @@ const AddQuestion = () => {
 
                         </div>
                         <div className="float-right">
-                            <Button value="등록"/>
+                            <Button value="수정"/>
                         </div>
 
                     </form>
@@ -120,4 +120,4 @@ const AddQuestion = () => {
     );
 };
 
-export default AddQuestion;
+export default ModifyQuestion;
