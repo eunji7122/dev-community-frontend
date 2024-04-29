@@ -1,6 +1,44 @@
 import Layout from "../layouts/layout";
+import {Link, useNavigate} from "react-router-dom";
+import {ChangeEvent, useState} from "react";
+import {useDispatch} from "react-redux";
+import axios from "axios";
+import {signIn} from "../slice/authSlice";
 
-export default function Login() {
+export default function SignIn() {
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
+    }
+
+    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+    }
+
+    const handleClickLogin = async () => {
+        try {
+            const response = await axios.post("http://localhost:8070/api/auth/token", {
+                email: email,
+                password: password,
+            });
+            console.log(response.data)
+            dispatch(
+                signIn({
+                    token: response.data.accessToken,
+                })
+            );
+            // navigate({pathname: '/'}, {replace:true})
+        } catch (e: any) {
+            alert(e);
+        }
+    }
+
     return (
         <Layout>
             <div>
@@ -15,19 +53,22 @@ export default function Login() {
                             <span className="text-sm font-bold text-gray-600">소셜 로그인</span>
                             <div className="mt-1 grid grid-cols-3 gap-3">
                                 <div>
-                                    <a className="inline-flex w-full justify-center rounded-md border border-gray-300 px-4 py-2 text-gray-700 shadow-sm hover:border-gray-500 text-center">
+                                    <Link className="inline-flex w-full justify-center rounded-md border border-gray-300 px-4 py-2 text-gray-700 shadow-sm hover:border-gray-500 text-center"
+                                          to={"/"}>
                                         Google
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div>
-                                    <a className="inline-flex w-full justify-center rounded-md border border-gray-300 px-4 py-2 text-gray-700 shadow-sm hover:border-gray-500 text-center">
+                                    <Link className="inline-flex w-full justify-center rounded-md border border-gray-300 px-4 py-2 text-gray-700 shadow-sm hover:border-gray-500 text-center"
+                                          to={"/"}>
                                         Naver
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div>
-                                    <a className="inline-flex w-full justify-center rounded-md border border-gray-300 px-4 py-2 text-gray-700 shadow-sm hover:border-gray-500 text-center">
+                                    <Link className="inline-flex w-full justify-center rounded-md border border-gray-300 px-4 py-2 text-gray-700 shadow-sm hover:border-gray-500 text-center"
+                                          to={"/"}>
                                         Kakao
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -47,11 +88,13 @@ export default function Login() {
                                         아이디
                                     </label>
                                     <input
-                                        id="user-id"
+                                        id="email"
                                         type="text"
                                         autoComplete=""
                                         className="block w-full appearance-none rounded-md border border-gray-500/30 px-3 py-2 text-sm placeholder-gray-500/80 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-0 dark:bg-gray-500/20 sm:text-base"
-                                        name="userId"
+                                        name="email"
+                                        value={email}
+                                        onChange={handleEmailChange}
                                     />
                                 </div>
                                 <div>
@@ -64,13 +107,16 @@ export default function Login() {
                                         autoComplete="current-password"
                                         className="block w-full appearance-none rounded-md border border-gray-500/30 px-3 py-2 text-sm placeholder-gray-500/80 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-0 dark:bg-gray-500/20 sm:text-base"
                                         name="password"
+                                        value={password}
+                                        onChange={handlePasswordChange}
                                     />
                                 </div>
                             </div>
 
                             <button
-                                type="submit"
+                                type="button"
                                 className="inline-block px-7 py-3 bg-gray-600 text-white font-medium text-lg leading-snug uppercase rounded shadow-md hover:bg-gray-700 hover:shadow-lg transition duration-150 ease-in-out w-full"
+                                onClick={handleClickLogin}
                             >
                                 로그인
                             </button>
@@ -79,15 +125,15 @@ export default function Login() {
                         <div className="py-7 px-16 flex justify-between items-center">
                             <ul className="flex flex-wrap items-center text-gray-600 text-sm">
                                 <li>
-                                    <a>아이디 찾기</a>
+                                    <Link to={"/"}>아이디 찾기</Link>
                                 </li>
                                 <p className="text-xs text-gray-400 px-5">|</p>
                                 <li>
-                                    <a>비밀번호 찾기</a>
+                                    <Link to={"/"}>비밀번호 찾기</Link>
                                 </li>
                                 <p className="text-xs text-gray-400 px-5">|</p>
                                 <li>
-                                    <a>회원가입</a>
+                                    <Link to={"/"}>회원가입</Link>
                                 </li>
                             </ul>
                         </div>

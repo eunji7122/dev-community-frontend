@@ -3,7 +3,7 @@ import {lazy, Suspense} from "react";
 import questionRouter from "./question-router";
 
 const Main = lazy(() => import("../pages/main"))
-const Login = lazy(() => import("../pages/login"))
+const Login = lazy(() => import("../pages/signIn"))
 const CreateAccount = lazy(() => import("../pages/create-account"))
 const QuestionIndex = lazy(() => import("../pages/question/index-question"))
 
