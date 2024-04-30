@@ -1,6 +1,41 @@
 import Layout from "../layouts/layout";
+import {ChangeEvent, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import {signUp} from "../api/memberApi";
 
 export default function CreateAccount() {
+    const navigate = useNavigate()
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+
+    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
+    }
+
+    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+    }
+
+    const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setName(e.target.value);
+    }
+
+    const handleClickSignUp = async () => {
+        const params = {
+            email: email,
+            password: password,
+            name: name
+        }
+
+        signUp(params).then(res => {
+            navigate({
+                pathname: '/login',
+            })
+        })
+    }
+
     return (
         <Layout>
             <div>
@@ -17,19 +52,22 @@ export default function CreateAccount() {
                             </span>
                             <div className="mt-1 grid grid-cols-3 gap-3">
                                 <div>
-                                    <a className="inline-flex w-full justify-center rounded-md border border-gray-300 px-4 py-2 text-gray-700 shadow-sm hover:border-gray-500 text-center">
+                                    <Link className="inline-flex w-full justify-center rounded-md border border-gray-300 px-4 py-2 text-gray-700 shadow-sm hover:border-gray-500 text-center"
+                                          to={"/"}>
                                         Google
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div>
-                                    <a className="inline-flex w-full justify-center rounded-md border border-gray-300 px-4 py-2 text-gray-700 shadow-sm hover:border-gray-500 text-center">
+                                    <Link className="inline-flex w-full justify-center rounded-md border border-gray-300 px-4 py-2 text-gray-700 shadow-sm hover:border-gray-500 text-center"
+                                          to={"/"}>
                                         Naver
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div>
-                                    <a className="inline-flex w-full justify-center rounded-md border border-gray-300 px-4 py-2 text-gray-700 shadow-sm hover:border-gray-500 text-center">
+                                    <Link className="inline-flex w-full justify-center rounded-md border border-gray-300 px-4 py-2 text-gray-700 shadow-sm hover:border-gray-500 text-center"
+                                          to={"/"}>
                                         Kakao
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -49,11 +87,13 @@ export default function CreateAccount() {
                                         아이디
                                     </label>
                                     <input
-                                        id="user-id"
+                                        id="email"
                                         type="text"
                                         className="block w-full appearance-none rounded-md border border-gray-500/30 px-3 py-2 text-sm placeholder-gray-500/80 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-0 dark:bg-gray-500/20 sm:text-base"
                                         placeholder="이메일 형식으로 입력해 주세요"
-                                        name="id"
+                                        name="email"
+                                        value={email}
+                                        onChange={handleEmailChange}
                                     />
                                 </div>
                                 <div>
@@ -67,6 +107,8 @@ export default function CreateAccount() {
                                         className="block w-full appearance-none rounded-md border border-gray-500/30 px-3 py-2 text-sm placeholder-gray-500/80 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-0 dark:bg-gray-500/20 sm:text-base"
                                         placeholder="최소 6자 이상(알파벳, 숫자 필수)"
                                         name="password"
+                                        value={password}
+                                        onChange={handlePasswordChange}
                                     />
                                 </div>
                                 <div>
@@ -74,18 +116,21 @@ export default function CreateAccount() {
                                         이름
                                     </label>
                                     <input
-                                        id="fullName"
+                                        id="name"
                                         type="text"
                                         className="block w-full appearance-none rounded-md border border-gray-500/30 px-3 py-2 text-sm placeholder-gray-500/80 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-0 dark:bg-gray-500/20 sm:text-base"
                                         placeholder="홍길동"
-                                        name="fullName"
+                                        name="name"
+                                        value={name}
+                                        onChange={handleNameChange}
                                     />
                                 </div>
                             </div>
 
                             <button
-                                type="submit"
+                                type="button"
                                 className="inline-block px-7 py-3 bg-gray-600 text-white font-medium text-lg leading-snug uppercase rounded shadow-md hover:bg-gray-700 hover:shadow-lg transition duration-150 ease-in-out w-full"
+                                onClick={handleClickSignUp}
                             >
                                 회원가입
                             </button>
@@ -94,15 +139,15 @@ export default function CreateAccount() {
                         <div className="py-7 px-16 flex justify-between items-center">
                             <ul className="flex flex-wrap items-center text-gray-600 text-sm">
                                 <li>
-                                    <a>아이디 찾기</a>
+                                    <Link to={"/"}>아이디 찾기</Link>
                                 </li>
                                 <p className="text-xs text-gray-400 px-5">|</p>
                                 <li>
-                                    <a>비밀번호 찾기</a>
+                                    <Link to={"/"}>비밀번호 찾기</Link>
                                 </li>
                                 <p className="text-xs text-gray-400 px-5">|</p>
                                 <li>
-                                    <a>회원가입</a>
+                                    <Link to={"/"}>회원가입</Link>
                                 </li>
                             </ul>
                         </div>
