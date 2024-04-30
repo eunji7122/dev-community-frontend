@@ -6,6 +6,6 @@ export const getToken = async (params: any) => {
         email: params.email,
         password: params.password
     })
-
+console.log(res.data)
     return res.data
 }

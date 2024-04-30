@@ -27,7 +27,8 @@ export default function SignIn() {
         }
         const res = await dispatch(getTokenAsync(param))
         dispatch( setToken({
-            token: res.payload.data.accessToken,
+            accessToken: res.payload.data.accessToken,
+            refreshToken: res.payload.data.refreshToken
         }))
         navigate({pathname: '/'})
     }

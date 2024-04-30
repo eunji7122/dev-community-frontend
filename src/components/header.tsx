@@ -1,13 +1,23 @@
 import {Link, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../store/store";
 import {clearToken} from "../slice/authSlice";
+import {useEffect, useState} from "react";
+import {getBoards} from "../api/boardApi";
 
 export default function Header() {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
+    const [boards, setBoards] = useState(Array);
 
     const tokenState = useAppSelector(state => state.auth)
+
+    useEffect(() => {
+        // getBoards().then(data => {
+        //     console.log(data.data)
+        //     setBoards(data.data)
+        // })
+    }, [])
 
     const handleClickSignOut = async () => {
         dispatch(clearToken())
@@ -43,7 +53,7 @@ export default function Header() {
                         </div>
                     </div>
                     <div className="hidden items-center md:flex">
-                        {tokenState.token === '' ?
+                        {tokenState.accessToken === '' ?
                             <>
                                 <Link to={"/login"}>
                                     <span className="ml-2 hidden h-[35px] w-[85px] items-center justify-center rounded border bg-gray-700 text-center text-xs font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none dark:border-gray-500/70 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600 sm:flex lg:ml-10">
