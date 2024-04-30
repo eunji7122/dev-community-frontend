@@ -1,14 +1,13 @@
 import Layout from "../layouts/layout";
 import {Link, useNavigate} from "react-router-dom";
 import {ChangeEvent, useState} from "react";
-import {useDispatch} from "react-redux";
-import axios from "axios";
-import {signIn} from "../slice/authSlice";
+import {getTokenAsync, setToken} from "../slice/authSlice";
+import {useAppDispatch} from "../store/store";
 
 export default function SignIn() {
 
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -22,21 +21,15 @@ export default function SignIn() {
     }
 
     const handleClickLogin = async () => {
-        try {
-            const response = await axios.post("http://localhost:8070/api/auth/token", {
-                email: email,
-                password: password,
-            });
-            console.log(response.data)
-            dispatch(
-                signIn({
-                    token: response.data.accessToken,
-                })
-            );
-            // navigate({pathname: '/'}, {replace:true})
-        } catch (e: any) {
-            alert(e);
+        const param = {
+            email: email,
+            password: password
         }
+        const res = await dispatch(getTokenAsync(param))
+        dispatch( setToken({
+            token: res.payload.data.accessToken,
+        }))
+        navigate({pathname: '/'})
     }
 
     return (
