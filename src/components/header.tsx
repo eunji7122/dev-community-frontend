@@ -4,19 +4,26 @@ import {clearToken} from "../slice/authSlice";
 import {useEffect, useState} from "react";
 import {getBoards} from "../api/boardApi";
 
+interface Board {
+    id: number,
+    name: string,
+    path: string,
+    usingStatus: boolean
+}
+
 export default function Header() {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const [boards, setBoards] = useState(Array);
+    const [boards, setBoards] = useState<Board[]>([]);
+
 
     const tokenState = useAppSelector(state => state.auth)
 
     useEffect(() => {
-        // getBoards().then(data => {
-        //     console.log(data.data)
-        //     setBoards(data.data)
-        // })
+        getBoards().then(res => {
+            setBoards(res.data)
+        })
     }, [])
 
     const handleClickSignOut = async () => {
@@ -25,7 +32,8 @@ export default function Header() {
     }
 
     return (
-        <header className="sticky top-0 shadow z-20 flex h-16 items-center border-b border-b-gray-500/30 bg-white py-5 text-sm font-medium leading-6 dark:border-b-gray-500/70 dark:bg-gray-800">
+        <header
+            className="sticky top-0 shadow z-20 flex h-16 items-center border-b border-b-gray-500/30 bg-white py-5 text-sm font-medium leading-6 dark:border-b-gray-500/70 dark:bg-gray-800">
             <nav aria-label="Global" className="sticky top-0 mx-auto flex w-full max-w-7xl px-4 lg:px-0">
                 <div className="flex w-full items-center justify-between">
                     <div className="flex">
@@ -35,21 +43,15 @@ export default function Header() {
                             </span>
                         </Link>
                         <div className="ml-3 hidden items-center space-x-7 md:flex lg:ml-[105px]">
-                            <div className="shrink-0">
-                                <Link
-                                    className="font-extrabold text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-200 text-base hover:no-underline"
-                                    to={"/questions"}>
-                                    Q/A
-                                </Link>
-
-                            </div>
-                            <div className="shrink-0">
-                                <Link
-                                    className="font-extrabold text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-200 text-base hover:no-underline"
-                                    to={"/community"}>
-                                    COMMUNITY
-                                </Link>
-                            </div>
+                            {boards.map((item: Board) =>
+                                <div key={item.id} className="shrink-0">
+                                    <Link
+                                        className="font-extrabold text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-200 text-base hover:no-underline"
+                                        to={item.path}>
+                                        {item.name}
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                     </div>
                     <div className="hidden items-center md:flex">
