@@ -7,3 +7,14 @@ export const getBoards = async () => {
 
     return res.data
 }
+
+export const getPostsByBoardId = async (boardId: number, page: number, size: number) => {
+    const res = await axios.get(`${host}/${boardId}/posts`, {
+        params: {
+            page: page,
+            size: size
+        }
+    })
+
+    return res.data
+}

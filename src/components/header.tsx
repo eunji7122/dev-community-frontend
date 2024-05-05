@@ -3,13 +3,7 @@ import {useAppDispatch, useAppSelector} from "../store/store";
 import {clearToken} from "../slice/authSlice";
 import {useEffect, useState} from "react";
 import {getBoards} from "../api/boardApi";
-
-interface Board {
-    id: number,
-    name: string,
-    path: string,
-    usingStatus: boolean
-}
+import {Board} from "../model/board";
 
 export default function Header() {
 
