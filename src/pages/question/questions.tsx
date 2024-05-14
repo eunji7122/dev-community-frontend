@@ -29,13 +29,13 @@ const Questions = () => {
 
     const handleClickAdd = useCallback(() => {
         navigate({
-            pathname: '../add'
+            pathname: '../questions/add'
         })
     }, []);
 
     const moveToView = (id: number) => {
         navigate({
-            pathname: `../view/${id}`,
+            pathname: `../questions/${id}`,
         })
     }
 
@@ -83,7 +83,7 @@ const Questions = () => {
                                 </div>
                                 <div className="flex items-center gap-x-2">
                                     <p className="line-clamp-1 text-xs font-normal leading-5 text-gray-600 hover:text-blue-500 sm:text-sm">
-                                        {item.createdAt}
+                                        {item.updatedAt}
                                     </p>
                                 </div>
                             </div>
@@ -94,7 +94,6 @@ const Questions = () => {
 
             {pageInfo ?
                 <div className="mb-9 sm:mb-16">
-                {/*<Pagination page={pageInfo?.page!} size={pageInfo?.size!} totalPages={pageInfo?.totalPages!}/>*/}
                 <Pagination pageInfo={pageInfo} moveToList={moveToList}/>
             </div> : <></>
             }

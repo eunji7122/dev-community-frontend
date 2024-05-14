@@ -12,7 +12,7 @@ const questionRouter = () => {
             element: <Suspense><QuestionList/></Suspense>
         },
         {
-            path: 'view/:id',
+            path: ':id',
             element: <Suspense><QuestionView/></Suspense>
         },
         {

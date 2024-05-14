@@ -1,4 +1,5 @@
 import {Board} from "./board";
+import {Member} from "./member";
 
 export interface Post {
     id: number,
@@ -6,6 +7,8 @@ export interface Post {
     content: string,
     viewCount: number,
     board: Board,
+    member: Member,
+    tags: Array<string>,
     createdAt: string,
     updatedAt: string
 }
