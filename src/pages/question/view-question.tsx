@@ -66,15 +66,15 @@ const ViewQuestion = () => {
                     <div role="textbox" aria-multiline="true" aria-readonly="true" aria-label=""
                          aria-placeholder="내용을 입력해주세요." translate="no"
                          className="ProseMirror remirror-editor remirror-a11y-dark">
-                        <p>
-                            {post?.content}
-                        </p>
+                        <p dangerouslySetInnerHTML={{ __html: post?.content! }}/>
                         <br className="ProseMirror-trailingBreak"/>
                     </div>
                 </div>
                 <div className="flex flex-1 flex-wrap items-center">
-                    {post?.tags.map((tag: string) =>
-                        <p className="mx-1.5 my-0.5 flex h-7 items-center rounded-[39px] bg-gray-100 px-3 py-1.5 text-sm font-normal text-gray-700 hover:text-blue-500 hover:no-underline dark:bg-gray-700 dark:text-gray-300 dark:hover:text-blue-200">
+                    {post?.tags.map((tag: string, index: number) =>
+                        <p
+                            key={index}
+                            className="mx-1.5 my-0.5 flex h-7 items-center rounded-[39px] bg-gray-100 px-3 py-1.5 text-sm font-normal text-gray-700 hover:text-blue-500 hover:no-underline dark:bg-gray-700 dark:text-gray-300 dark:hover:text-blue-200">
                             <span className="hover:no-underline">{tag}</span>
                         </p>
                     )}

@@ -66,13 +66,13 @@ const Questions = () => {
                                 </div>
                                 <div className="flex items-center gap-x-2">
                                     <p className="line-clamp-1 text-xs font-normal leading-5 text-gray-600 hover:text-blue-500 sm:text-sm">
-                                        view{item.viewCount} like1
+                                        view{item.viewCount} like{item.heartCount}
                                     </p>
                                 </div>
                             </div>
                             <div className="mb-4">
-                                <p className="line-clamp-2 w-fit truncate whitespace-normal break-all text-xs font-normal text-gray-500 hover:text-blue-500 sm:text-sm">
-                                    {item.content}
+                                <p dangerouslySetInnerHTML={{ __html: item.content }}
+                                   className="line-clamp-2 w-fit truncate whitespace-normal break-all text-xs font-normal text-gray-500 hover:text-blue-500 sm:text-sm">
                                 </p>
                             </div>
                             <div className="flex">

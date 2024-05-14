@@ -9,6 +9,8 @@ export interface Post {
     board: Board,
     member: Member,
     tags: Array<string>,
+    heartCount: number,
+    rewardPoint: number,
     createdAt: string,
     updatedAt: string
 }
