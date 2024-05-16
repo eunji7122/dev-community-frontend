@@ -32,3 +32,9 @@ export const deletePost = async () => {
 
     return res.data
 }
+
+export const getComments = async (postId: number) => {
+    const res = await axios.get(`${host}/${postId}/comments`)
+
+    return res.data
+}

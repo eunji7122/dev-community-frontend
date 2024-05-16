@@ -1,54 +1,8 @@
 import React, {ChangeEvent, useState} from 'react';
 import Button from "../../components/button";
-import ReactQuill, { Quill } from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import { ImageActions } from '@xeger/quill-image-actions';
-import { ImageFormats } from '@xeger/quill-image-formats';
 import {createPost} from "../../api/postApi";
 import useCustomMove from "../../hooks/useCustomMove";
-
-Quill.register('modules/imageActions', ImageActions);
-Quill.register('modules/imageFormats', ImageFormats);
-
-const formats = [
-    'font',
-    'header',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'list',
-    'bullet',
-    'indent',
-    'link',
-    'align',
-    'color',
-    'background',
-    'size',
-    'image',
-    'float',
-    'height',
-    'width',
-];
-
-const toolbarOptions = [
-    [{ header: [1, 2, 3, false] }],
-    ["bold", "italic", "underline", "strike"],
-    ["blockquote"],
-    [{ list: "ordered" }, { list: "bullet" }],
-    [{ color: [] }, { background: [] }],
-    [{ align: [] }],
-    ["image"],
-];
-
-const modules= {
-    imageActions: {},
-    imageFormats: {},
-    toolbar: {
-        container: toolbarOptions,
-    },
-};
+import QuillEditor from "../../components/quill-editor";
 
 const BOARD_ID = 1
 
@@ -135,15 +89,7 @@ const AddQuestion = () => {
                             <div className="mb-5">
                                 <label htmlFor="point"
                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">본문</label>
-                                <ReactQuill
-                                    theme={"snow"}
-                                    formats={formats}
-                                    placeholder={"내용을 입력해주세요."}
-                                    style={{height: "200px"}}
-                                    modules={modules}
-                                    value={content}
-                                    onChange={setContent}
-                                />
+                                <QuillEditor content={content} setContent={setContent} height={"300px"}/>
                             </div>
 
                         </div>

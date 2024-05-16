@@ -29,7 +29,7 @@ const Questions = () => {
 
     const handleClickAdd = useCallback(() => {
         navigate({
-            pathname: '../questions/add'
+            pathname: '/questions/add'
         })
     }, []);
 

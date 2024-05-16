@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {SyntheticEvent, useEffect, useState} from 'react';
 import Button from "../../components/button";
 import {useNavigate, useParams} from "react-router-dom";
 import {getPost} from "../../api/postApi";
 import {Post} from "../../model/post";
+import Comments from "../../components/comments";
+import userImage from "../../images/default_user.png";
 
 const ViewQuestion = () => {
     const {id} = useParams()
@@ -22,6 +24,10 @@ const ViewQuestion = () => {
         })
     }
 
+    const addDefaultImage = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+        e.currentTarget.src = userImage;
+    };
+
     return (
         <div>
             <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
@@ -30,7 +36,7 @@ const ViewQuestion = () => {
                     <div className="flex items-center justify-center">
                         <img
                             className="inline-block h-10 w-10 rounded-full"
-                            src="../../images/default_user.png"
+                            src={post?.member.profile ? post?.member.profile : userImage} onError={addDefaultImage}
                             alt="프로필 사진"/>
                         <div className="ml-2 flex flex-1 flex-col text-base font-normal">
                             <span className="pl-0.5 text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-200">
@@ -82,7 +88,11 @@ const ViewQuestion = () => {
                 <div className="float-right" onClick={() => moveToModify()}>
                     <Button value="수정" />
                 </div>
+                <hr className="h-px mt-16 bg-gray-200 border-0 dark:bg-gray-700"/>
+            </div>
 
+            <div>
+                <Comments boardId={1} postId={parseInt(id!)}/>
             </div>
         </div>
     );
