@@ -1,4 +1,4 @@
-import React, {SyntheticEvent, useCallback, useEffect, useState} from 'react';
+import React, {SyntheticEvent, useEffect, useState} from 'react';
 import QuillEditor from "./quill-editor";
 import Button from "./button";
 import {getComments} from "../api/postApi";
@@ -11,24 +11,25 @@ interface propsType {
     postId: number
 }
 
-const Comments = (props: propsType) => {
+const Comments = ({boardId, postId}: propsType) => {
 
     const [comments, setComments] = useState<Comment[]>()
-    const [content, setContent] = useState("")
+    const [htmlContent, setHtmlContent] = useState("")
+    const [refresh, setRefresh] = useState(false)
 
     useEffect(() => {
-        getComments(props.postId).then(data => {
+        getComments(postId).then(data => {
             setComments(data.data);
-            console.log(data.data)
+            setRefresh(false)
         })
-    }, [props.postId]);
+    }, [refresh]);
 
-
-    const handleClickAdd = useCallback(() => {
-        createComment(props.postId, content).then(res => {
-            console.log(res.data)
+    const handleClickAdd = () => {
+        createComment(postId, htmlContent).then(() => {
+            setHtmlContent("")
+            setRefresh(true)
         })
-    }, []);
+    }
 
     const addDefaultImage = (e: SyntheticEvent<HTMLImageElement, Event>) => {
         e.currentTarget.src = userImage;
@@ -38,7 +39,7 @@ const Comments = (props: propsType) => {
         <div className="w-full py-4 mb-20 mx-auto bg-white sm:px-4 sm:py-4 md:px-4 md:w-3/4">
 
             <div className="mb-24 h-32">
-                <QuillEditor content={content} setContent={setContent} height={"100px"}/>
+                <QuillEditor content={htmlContent} setContent={setHtmlContent} height={"100px"}/>
                 <div className="float-right mt-14" >
                     <Button value="댓글 쓰기" onClick={handleClickAdd}/>
                 </div>

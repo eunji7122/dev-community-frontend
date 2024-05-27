@@ -47,23 +47,23 @@ const modules= {
     },
 };
 
-interface propsType {
+interface QuillEditorProps {
     content: string,
     setContent: any,
     height: any
 }
 
-const QuillEditor = (props: propsType) => {
+const QuillEditor = ({ content, setContent, height }: QuillEditorProps) => {
     return (
         <div>
             <ReactQuill
                 theme={"snow"}
                 formats={formats}
                 placeholder={"내용을 입력해주세요."}
-                style={{height: props.height}}
+                style={{height: height}}
                 modules={modules}
-                value={props.content}
-                onChange={props.setContent}
+                value={content}
+                onChange={setContent}
             />
         </div>
     );
