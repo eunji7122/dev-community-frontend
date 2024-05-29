@@ -27,12 +27,11 @@ const AddQuestion = () => {
     }
 
     const handleClickAdd = () => {
-        createPost(BOARD_ID, title, content, tags, rewardPoint).then(result => {
+        createPost(BOARD_ID, title, content, tags, rewardPoint, []).then(result => {
             console.log(result)
             moveToList({page: 1, size: 5})
         })
     }
-
 
     return (
         <div>
@@ -94,7 +93,7 @@ const AddQuestion = () => {
 
                         </div>
                         <div className="float-right mt-10 my-5" onClick={handleClickAdd}>
-                            <Button value="등록" onClick={handleClickAdd}/>
+                            <Button value="등록"/>
                         </div>
 
                     </form>

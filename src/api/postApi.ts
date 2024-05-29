@@ -9,16 +9,35 @@ export const getPost = async (id: number) => {
     return res.data
 }
 
-export const createPost = async (boardId: number, title: string, content: string, tags: string, rewardPoint: number) => {
-    const res = await jwtAxios.post(`${host}/`, {
+export const createPost = async (boardId: number, title: string, content: string, tags: string, rewardPoint: number, files: []) => {
+    var post = {
         title: title,
         content: content,
-        boardId: boardId,
         tags: tags,
-        rewardPoint: rewardPoint
-    })
+        rewardPoint: rewardPoint,
+        boardId: boardId
+    }
+
+    const form = new FormData()
+    for (const file in files) {
+        form.append("files", file)
+    }
+    form.append("postRequestDto", new Blob([JSON.stringify(post)], {type: "application/json"}))
+
+    const res = await jwtAxios.post(`${host}/`, form)
 
     return res.data
+}
+
+export const imagePost = async (file: File) => {
+    const form = new FormData()
+    form.append("files", file)
+
+    const res = await jwtAxios.post(
+        `${host}/file`,
+        form
+    )
+    return res.data.data[0]
 }
 
 export const updatePost = async () => {
