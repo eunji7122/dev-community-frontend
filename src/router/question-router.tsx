@@ -20,7 +20,7 @@ const questionRouter = () => {
             element: <Suspense><QuestionAdd/></Suspense>
         },
         {
-            path: 'modify/:id',
+            path: ':id/modify',
             element: <Suspense><QuestionModify/></Suspense>
         }
     ]

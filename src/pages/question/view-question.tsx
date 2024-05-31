@@ -20,7 +20,7 @@ const ViewQuestion = () => {
 
     const moveToModify = () => {
         navigate({
-            pathname: `../modify/${id}`,
+            pathname: `../${id}/modify`,
         })
     }
 

@@ -49,12 +49,12 @@ const modules= {
 };
 
 interface QuillEditorProps {
-    content: string,
-    setContent: any,
+    value: string,
+    onChange: any,
     height: any
 }
 
-const QuillEditor = ({ content, setContent, height }: QuillEditorProps) => {
+const QuillEditor = ({ value, onChange, height }: QuillEditorProps) => {
 
     const quillRef = useRef<any>(null);
 
@@ -100,8 +100,8 @@ const QuillEditor = ({ content, setContent, height }: QuillEditorProps) => {
                 placeholder={"내용을 입력해주세요."}
                 style={{height: height}}
                 modules={modules}
-                value={content}
-                onChange={setContent}
+                value={value}
+                onChange={onChange}
             />
         </div>
     );

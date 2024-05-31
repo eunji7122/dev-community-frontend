@@ -88,7 +88,7 @@ const AddQuestion = () => {
                             <div className="mb-5">
                                 <label htmlFor="point"
                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">본문</label>
-                                <QuillEditor content={content} setContent={setContent} height={"300px"}/>
+                                <QuillEditor value={content} onChange={setContent} height={"300px"}/>
                             </div>
 
                         </div>

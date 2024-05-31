@@ -39,7 +39,7 @@ const Comments = ({boardId, postId}: propsType) => {
         <div className="w-full py-4 mb-20 mx-auto bg-white sm:px-4 sm:py-4 md:px-4 md:w-3/4">
 
             <div className="mb-24 h-32">
-                <QuillEditor content={htmlContent} setContent={setHtmlContent} height={"100px"}/>
+                <QuillEditor value={htmlContent} onChange={setHtmlContent} height={"100px"}/>
                 <div className="float-right mt-14" >
                     <Button value="댓글 쓰기" onClick={handleClickAdd}/>
                 </div>

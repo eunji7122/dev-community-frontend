@@ -40,8 +40,23 @@ export const imagePost = async (file: File) => {
     return res.data.data[0]
 }
 
-export const updatePost = async () => {
-    const res = await axios.get(`${host}/`)
+export const updatePost = async (boardId: number, postId: number, title: string, content: string, tags: string, rewardPoint: number, files: []) => {
+    var post = {
+        title: title,
+        content: content,
+        tags: tags,
+        rewardPoint: rewardPoint,
+        boardId: boardId
+    }
+
+    const form = new FormData()
+    for (const file in files) {
+        form.append("files", file)
+    }
+    form.append("postRequestDto", new Blob([JSON.stringify(post)], {type: "application/json"}))
+
+    console.log("test")
+    const res = await jwtAxios.put(`${host}/${postId}`, form)
 
     return res.data
 }
