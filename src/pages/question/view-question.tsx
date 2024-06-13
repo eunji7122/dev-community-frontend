@@ -1,20 +1,23 @@
 import React, {SyntheticEvent, useEffect, useState} from 'react';
 import Button from "../../components/button";
 import {useNavigate, useParams} from "react-router-dom";
-import {getPost} from "../../api/postApi";
+import {deletePostHeart, getPost, savePostHeart} from "../../api/postApi";
 import {Post} from "../../model/post";
 import Comments from "../../components/comments";
 import userImage from "../../images/default_user.png";
+import { BsBookmarkHeart, BsBookmarkHeartFill } from "react-icons/bs";
 
 const ViewQuestion = () => {
-    const {id} = useParams()
+    const {id} = useParams<string>()
     const navigate = useNavigate()
 
     const [post, setPost] = useState<Post>()
+    const [heart, setHeart] = useState<boolean>(false)
 
     useEffect(() => {
         getPost(parseInt(id!!)).then(data => {
             setPost(data.data);
+            console.log(data.data)
         })
     }, [id]);
 
@@ -27,6 +30,20 @@ const ViewQuestion = () => {
     const addDefaultImage = (e: SyntheticEvent<HTMLImageElement, Event>) => {
         e.currentTarget.src = userImage;
     };
+
+    const heartButtonClick = () => {
+        if (heart) {
+            deletePostHeart(parseInt(id!)).then(() =>{
+                alert("좋아요 취소")
+                setHeart(!heart)
+            })
+        } else {
+            savePostHeart(parseInt(id!)).then(() =>{
+                alert("좋아요 등록")
+                setHeart(!heart)
+            })
+        }
+    }
 
     return (
         <div>
@@ -60,12 +77,19 @@ const ViewQuestion = () => {
                         </div>
                     </div>
                     <div className="ml-auto flex items-center gap-x-4 text-sm text-gray-700 sm:gap-x-5 dark:text-gray-300">
-                        <button>
-                            <span className="sr-only">좋아요</span>
-                            <svg width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path>
-                            </svg>
+                        <button onClick={heartButtonClick}>
+                            { !heart ?
+                                <BsBookmarkHeart size={30}/>
+                                :
+                                <BsBookmarkHeartFill size={30}/>
+                            }
                         </button>
+                        {/*<button>*/}
+                        {/*    <span className="sr-only">좋아요</span>*/}
+                        {/*    <svg width="24" height="24" viewBox="0 0 24 24">*/}
+                        {/*        <path fill="currentColor" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path>*/}
+                        {/*    </svg>*/}
+                        {/*</button>*/}
                     </div>
                 </div>
                 <div>

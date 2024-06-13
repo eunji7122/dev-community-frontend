@@ -67,6 +67,18 @@ export const deletePost = async () => {
     return res.data
 }
 
+export const savePostHeart = async (postId: number) => {
+    const res = await jwtAxios.post(`${host}/${postId}/heart`)
+
+    return res.data
+}
+
+export const deletePostHeart = async (postId: number) => {
+    const res = await jwtAxios.delete(`${host}/${postId}/heart`)
+
+    return res.data
+}
+
 export const getComments = async (postId: number) => {
     const res = await axios.get(`${host}/${postId}/comments`)
 
