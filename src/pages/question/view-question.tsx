@@ -1,15 +1,18 @@
 import React, {SyntheticEvent, useEffect, useState} from 'react';
 import Button from "../../components/button";
 import {useNavigate, useParams} from "react-router-dom";
-import {deletePostHeart, getPost, savePostHeart} from "../../api/postApi";
+import {deletePostHeart, getPost, getPostHeartByMember, savePostHeart} from "../../api/postApi";
 import {Post} from "../../model/post";
 import Comments from "../../components/comments";
 import userImage from "../../images/default_user.png";
 import { BsBookmarkHeart, BsBookmarkHeartFill } from "react-icons/bs";
+import {useAppSelector} from "../../store/store";
 
 const ViewQuestion = () => {
     const {id} = useParams<string>()
     const navigate = useNavigate()
+
+    const tokenState = useAppSelector(state => state.auth)
 
     const [post, setPost] = useState<Post>()
     const [heart, setHeart] = useState<boolean>(false)
@@ -19,6 +22,13 @@ const ViewQuestion = () => {
             setPost(data.data);
             console.log(data.data)
         })
+
+        if (tokenState.accessToken !== '') {
+            getPostHeartByMember(parseInt(id!!)).then(data => {
+                setHeart(data.data)
+            })
+        }
+
     }, [id]);
 
     const moveToModify = () => {
@@ -116,7 +126,7 @@ const ViewQuestion = () => {
             </div>
 
             <div>
-                <Comments boardId={1} postId={parseInt(id!)}/>
+                <Comments postId={parseInt(id!)}/>
             </div>
         </div>
     );

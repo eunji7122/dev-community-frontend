@@ -67,6 +67,12 @@ export const deletePost = async () => {
     return res.data
 }
 
+export const getPostHeartByMember = async (postId: number) => {
+    const res = await jwtAxios.get(`${host}/${postId}/heart`)
+
+    return res.data
+}
+
 export const savePostHeart = async (postId: number) => {
     const res = await jwtAxios.post(`${host}/${postId}/heart`)
 
@@ -81,6 +87,12 @@ export const deletePostHeart = async (postId: number) => {
 
 export const getComments = async (postId: number) => {
     const res = await axios.get(`${host}/${postId}/comments`)
+
+    return res.data
+}
+
+export const getCommentsWithHeart = async (postId: number) => {
+    const res = await jwtAxios.get(`${host}/${postId}/comments/heart`)
 
     return res.data
 }

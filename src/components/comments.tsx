@@ -1,31 +1,47 @@
 import React, {SyntheticEvent, useEffect, useState} from 'react';
 import QuillEditor from "./quill-editor";
 import Button from "./button";
-import {getComments} from "../api/postApi";
+import {getComments, getCommentsWithHeart} from "../api/postApi";
 import {Comment} from "../model/comment";
 import userImage from "../images/default_user.png";
 import {createComment, deleteCommentHeart, saveCommentHeart} from "../api/commentApi";
-import {BsHeart, BsHeartFill} from "react-icons/bs";
+import {useAppSelector} from "../store/store";
+import HeartButton from "./heart-button";
 
 interface propsType {
-    boardId: number,
     postId: number
 }
 
-const Comments = ({boardId, postId}: propsType) => {
+const Comments = ({postId}: propsType) => {
+
+    const tokenState = useAppSelector(state => state.auth)
 
     const [comments, setComments] = useState<Comment[]>()
     const [htmlContent, setHtmlContent] = useState("")
     const [refresh, setRefresh] = useState(false)
-    const [heart, setHeart] = useState<boolean>(false)
 
 
     useEffect(() => {
-        getComments(postId).then(data => {
-            setComments(data.data);
+        getComments(postId).then(res => {
+            const responseComments = res.data;
+            if (tokenState.accessToken !== '') {
+                getCommentsWithHeart(postId).then(data => {
+                    const responseCommentWithHearts = data.data;
+                    if (responseCommentWithHearts.length === responseComments.length) {
+                        for (let i = 0; i < responseComments.length; i++) {
+                            responseComments[i].isHeart = responseCommentWithHearts[i].isHeart;
+                        }
+                    }
+
+                    setComments(responseComments)
+                })
+            } else {
+                setComments(res.data)
+            }
+
             setRefresh(false)
         })
-    }, [refresh]);
+    }, [postId, refresh, tokenState.accessToken]);
 
     const handleClickAdd = () => {
         createComment(postId, htmlContent).then(() => {
@@ -38,16 +54,16 @@ const Comments = ({boardId, postId}: propsType) => {
         e.currentTarget.src = userImage;
     };
 
-    const heartButtonClick = (id: number) => {
+    const heartButtonClick = (commentId: number, heart: boolean) => {
         if (heart) {
-            deleteCommentHeart(id).then(() =>{
+            deleteCommentHeart(commentId).then(() =>{
                 alert("좋아요 취소")
-                setHeart(!heart)
+                setRefresh(true)
             })
         } else {
-            saveCommentHeart(id).then(() =>{
+            saveCommentHeart(commentId).then(() =>{
                 alert("좋아요 등록")
-                setHeart(!heart)
+                setRefresh(true)
             })
         }
     }
@@ -81,14 +97,9 @@ const Comments = ({boardId, postId}: propsType) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-x-2">
-                                    <button onClick={() => heartButtonClick(item.id)}>
-                                        { !heart ?
-                                            <BsHeart size={18}/>
-                                            :
-                                            <BsHeartFill size={18}/>
-                                        }
-                                    </button>
+                                <div className="flex items-center gap-x-1">
+                                    <HeartButton isHeart={item.isHeart} onClick={() => heartButtonClick(item.id, item.isHeart)}/>
+                                    <span className="mb-2 text-sm font-normal text-gray-500">{item.heartCount}</span>
                                 </div>
                             </div>
                         </div>
